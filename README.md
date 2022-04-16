@@ -33,6 +33,9 @@ docker run -e API_KEY=mykey ghcr.io/halkyon/prometheus-hetrixtools-exporter
 
 By default the exporter will listen on all interfaces on port `8080`. Use `-listen-address` to listen on something else.
 
+Note that the HetrixTools free account is limited to 1000 API calls per month. If you intend to have Prometheus scrape
+this data on a very frequent interval, you'll need to purchase a plan that includes more API calls.
+
 ## Building
 
 [`goreleaser`](https://goreleaser.com) is used to automate the entire build and release process.
