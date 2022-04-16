@@ -22,7 +22,13 @@ builds:
       - goos: freebsd
         goarch: arm
     ldflags:
-      - -s -w -X main.version={{ .Version }} -X main.commit={{ .Commit }} -X main.date={{ .CommitDate }}
+      - -s
+      - -w
+      - -X github.com/prometheus/common/version.Version={{ .Version }}
+      - -X github.com/prometheus/common/version.Revision={{ .ShortCommit }}
+      - -X github.com/prometheus/common/version.Branch={{ .Branch }}
+      - -X github.com/prometheus/common/version.BuildUser={{ .Env.USER }}
+      - -X github.com/prometheus/common/version.BuildDate={{ .Date }}
 dockers:
   - image_templates:
       - ghcr.io/halkyon/{{ .ProjectName }}:{{ .Version }}-amd64
