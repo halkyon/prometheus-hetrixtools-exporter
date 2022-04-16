@@ -47,8 +47,8 @@ func New(namespace, apiKey string) *Collector {
 
 	monitorResponseTime := prometheus.NewGaugeVec(prometheus.GaugeOpts{
 		Namespace: namespace,
-		Name:      "uptime_monitor_response_time",
-		Help:      "Response time of recent monitor check in milliseconds",
+		Name:      "uptime_monitor_response_time_seconds",
+		Help:      "Response time of recent monitor check",
 	}, []string{"id", "name", "location", "target", "port"})
 
 	scrapeDurationTime := prometheus.NewGauge(prometheus.GaugeOpts{
@@ -112,7 +112,7 @@ func (c *Collector) collectUptimeMonitors(ch chan<- prometheus.Metric) {
 				ch <- prometheus.NewInvalidMetric(c.errorDesc, err)
 			}
 
-			c.monitorResponseTime.WithLabelValues(mon.ID, mon.Name, loc, mon.Target, mon.Port).Set(timeFloat)
+			c.monitorResponseTime.WithLabelValues(mon.ID, mon.Name, loc, mon.Target, mon.Port).Set(timeFloat / 1000)
 		}
 	}
 
