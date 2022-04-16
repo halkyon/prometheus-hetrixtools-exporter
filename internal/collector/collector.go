@@ -83,17 +83,20 @@ func New(apiKey string) *Collector {
 // Describe implements Prometheus.Collector.
 func (c *Collector) Describe(ch chan<- *prometheus.Desc) {
 	c.totalScrapes.Describe(ch)
-	c.scrapeDurationTime.Describe(ch)
 	c.monitorUptimeStatus.Describe(ch)
 	c.monitorResponseTime.Describe(ch)
+	c.scrapeDurationTime.Describe(ch)
 }
 
 // Collect implements Prometheus.Collector.
 func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 	start := time.Now()
+
 	c.totalScrapes.Inc()
-	c.collectUptimeMonitors(ch)
 	c.totalScrapes.Collect(ch)
+
+	c.collectUptimeMonitors(ch)
+
 	c.scrapeDurationTime.Set(time.Since(start).Seconds())
 	c.scrapeDurationTime.Collect(ch)
 }
