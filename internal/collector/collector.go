@@ -152,7 +152,7 @@ func fetchMonitors(client http.Client, apiKey, endpoint string) (monitors []Moni
 	}
 
 	if err := json.Unmarshal(tmp[0], &monitors); err != nil {
-		return monitors, fmt.Errorf("json unmarshal checks: %w", err)
+		return monitors, fmt.Errorf("json unmarshal: %w", err)
 	}
 
 	return monitors, nil
