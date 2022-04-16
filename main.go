@@ -15,12 +15,10 @@ import (
 
 const program = "hetrixtools_exporter"
 
-var (
-	displayVersion = flag.Bool("version", false, "Display version information")
-	addr           = flag.String("listen-address", ":8080", "The address to listen on for HTTP requests.")
-)
-
 func main() {
+	displayVersion := flag.Bool("version", false, "Display version information")
+	addr := flag.String("listen-address", ":8080", "The address to listen on for HTTP requests.")
+
 	flag.Parse()
 
 	versionCollector := version.NewCollector(program)
