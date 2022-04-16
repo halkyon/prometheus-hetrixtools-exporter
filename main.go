@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -13,7 +14,10 @@ import (
 	"github.com/prometheus/common/version"
 )
 
-const program = "hetrixtools_exporter"
+const (
+	program   = "hetrixtools_exporter"
+	namespace = "hetrixtools"
+)
 
 func main() {
 	displayVersion := flag.Bool("version", false, "Display version information")
@@ -21,10 +25,8 @@ func main() {
 
 	flag.Parse()
 
-	versionCollector := version.NewCollector(program)
-
 	if *displayVersion {
-		println(version.Print(program))
+		fmt.Println(version.Print(program))
 		return
 	}
 
@@ -34,8 +36,8 @@ func main() {
 	}
 
 	r := prometheus.NewRegistry()
-	r.MustRegister(versionCollector)
-	r.MustRegister(collector.New(apiKey))
+	r.MustRegister(version.NewCollector(program))
+	r.MustRegister(collector.New(namespace, apiKey))
 
 	mux := http.NewServeMux()
 	mux.Handle("/metrics", promhttp.HandlerFor(r, promhttp.HandlerOpts{}))

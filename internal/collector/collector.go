@@ -16,14 +16,12 @@ import (
 const (
 	apiBaseURL     = "https://api.hetrixtools.com/v1"
 	requestTimeout = 5 * time.Second
-	namespace      = "hetrixtools"
 )
 
 // Collector is an implementation of Prometheus.Collector.
 type Collector struct {
 	apiKey              string
 	client              http.Client
-	totalScrapes        prometheus.Counter
 	monitorUptimeStatus *prometheus.GaugeVec
 	monitorResponseTime *prometheus.GaugeVec
 	scrapeDurationTime  prometheus.Gauge
@@ -40,13 +38,7 @@ type Monitor struct {
 }
 
 // New returns a new Collector.
-func New(apiKey string) *Collector {
-	totalScrapes := prometheus.NewCounter(prometheus.CounterOpts{
-		Namespace: namespace,
-		Name:      "scrapes_total",
-		Help:      "Total scrapes",
-	})
-
+func New(namespace, apiKey string) *Collector {
 	monitorUptimeStatus := prometheus.NewGaugeVec(prometheus.GaugeOpts{
 		Namespace: namespace,
 		Name:      "uptime_monitor_status",
@@ -72,7 +64,6 @@ func New(apiKey string) *Collector {
 		client: http.Client{
 			Timeout: requestTimeout,
 		},
-		totalScrapes:        totalScrapes,
 		monitorUptimeStatus: monitorUptimeStatus,
 		monitorResponseTime: monitorResponseTime,
 		scrapeDurationTime:  scrapeDurationTime,
@@ -82,7 +73,6 @@ func New(apiKey string) *Collector {
 
 // Describe implements Prometheus.Collector.
 func (c *Collector) Describe(ch chan<- *prometheus.Desc) {
-	c.totalScrapes.Describe(ch)
 	c.monitorUptimeStatus.Describe(ch)
 	c.monitorResponseTime.Describe(ch)
 	c.scrapeDurationTime.Describe(ch)
@@ -91,9 +81,6 @@ func (c *Collector) Describe(ch chan<- *prometheus.Desc) {
 // Collect implements Prometheus.Collector.
 func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 	start := time.Now()
-
-	c.totalScrapes.Inc()
-	c.totalScrapes.Collect(ch)
 
 	c.collectUptimeMonitors(ch)
 
