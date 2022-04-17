@@ -28,7 +28,7 @@ hetrixtools_uptime_monitor_response_time_seconds{id="12345",location="San Franci
 To run the exporter with Docker:
 
 ```
-docker run -e API_KEY=mykey ghcr.io/halkyon/prometheus-hetrixtools-exporter
+docker run -e API_KEY=mykey halkyon/prometheus-hetrixtools-exporter
 ```
 
 By default the exporter will listen on all interfaces on port `8080`. Use `-listen-address` to listen on something else.
