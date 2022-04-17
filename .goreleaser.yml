@@ -10,12 +10,12 @@ builds:
       - windows
       - darwin
       - freebsd
-    goamd64:
-      - v1
     goarch:
       - amd64
       - arm
       - arm64
+    goamd64:
+      - v1
     goarm:
       - 6
     ignore:
