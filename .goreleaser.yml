@@ -10,12 +10,14 @@ builds:
       - windows
       - darwin
       - freebsd
+    goamd64:
+      - v1
     goarch:
       - amd64
       - arm
       - arm64
     goarm:
-      - "6"
+      - 6
     ignore:
       - goos: windows
         goarch: arm
@@ -34,6 +36,7 @@ dockers:
       - halkyon/{{ .ProjectName }}:{{ .Version }}-amd64
       - ghcr.io/halkyon/{{ .ProjectName }}:{{ .Version }}-amd64
     goarch: amd64
+    goamd64: v1
     use: buildx
     build_flag_templates:
       - --platform=linux/amd64
@@ -49,7 +52,7 @@ dockers:
       - halkyon/{{ .ProjectName }}:{{ .Version }}-armv6
       - ghcr.io/halkyon/{{ .ProjectName }}:{{ .Version }}-armv6
     goarch: arm
-    goarm: "6"
+    goarm: 6
     use: buildx
     build_flag_templates:
       - --platform=linux/arm/v6
@@ -108,7 +111,6 @@ checksum:
 snapshot:
   name_template: "{{ incpatch .Version }}-next"
 changelog:
-  sort: asc
   filters:
     exclude:
       - "^docs:"
