@@ -40,6 +40,7 @@ dockers:
   - image_templates:
       - halkyon/{{ .ProjectName }}:{{ .Version }}-amd64
       - ghcr.io/halkyon/{{ .ProjectName }}:{{ .Version }}-amd64
+    goos: linux
     goarch: amd64
     goamd64: v1
     use: buildx
@@ -56,6 +57,7 @@ dockers:
   - image_templates:
       - halkyon/{{ .ProjectName }}:{{ .Version }}-armv6
       - ghcr.io/halkyon/{{ .ProjectName }}:{{ .Version }}-armv6
+    goos: linux
     goarch: arm
     goarm: 6
     use: buildx
@@ -72,6 +74,7 @@ dockers:
   - image_templates:
       - halkyon/{{ .ProjectName }}:{{ .Version }}-arm64v8
       - ghcr.io/halkyon/{{ .ProjectName }}:{{ .Version }}-arm64v8
+    goos: linux
     goarch: arm64
     use: buildx
     build_flag_templates:
@@ -111,6 +114,9 @@ archives:
     format_overrides:
       - goos: windows
         format: zip
+    files:
+      - LICENSE
+      - README.md
 checksum:
   name_template: checksums_sha256.txt
   algorithm: sha256
