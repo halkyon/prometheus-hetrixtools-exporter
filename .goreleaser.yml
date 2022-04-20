@@ -134,8 +134,8 @@ docker_signs:
     env:
       - COSIGN_EXPERIMENTAL=1
     args:
-    - "sign"
-    - "${artifact}"
+      - "sign"
+      - "${artifact}"
     artifacts: images
     output: true
 snapshot:
