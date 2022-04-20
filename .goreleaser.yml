@@ -23,6 +23,9 @@ builds:
         goarch: arm
       - goos: freebsd
         goarch: arm
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    flags:
+      - -trimpath
     ldflags:
       - -s
       - -w
