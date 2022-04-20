@@ -31,6 +31,8 @@ builds:
       - -X github.com/prometheus/common/version.Branch={{ .Branch }}
       - -X github.com/prometheus/common/version.BuildUser={{ .Env.USER }}
       - -X github.com/prometheus/common/version.BuildDate={{ .Date }}
+gomod:
+  proxy: true
 dockers:
   - image_templates:
       - halkyon/{{ .ProjectName }}:{{ .Version }}-amd64
@@ -109,6 +111,33 @@ archives:
 checksum:
   name_template: checksums_sha256.txt
   algorithm: sha256
+source:
+  enabled: true
+sboms:
+  - artifacts: archive
+  - id: source
+    artifacts: source
+signs:
+  - cmd: cosign
+    env:
+      - COSIGN_EXPERIMENTAL=1
+    certificate: "${artifact}.pem"
+    args:
+      - sign-blob
+      - "--output-certificate=${certificate}"
+      - "--output-signature=${signature}"
+      - "${artifact}"
+    artifacts: checksum
+    output: true
+docker_signs:
+  - cmd: cosign
+    env:
+      - COSIGN_EXPERIMENTAL=1
+    args:
+    - "sign"
+    - "${artifact}"
+    artifacts: images
+    output: true
 snapshot:
   name_template: "{{ incpatch .Version }}-next"
 changelog:

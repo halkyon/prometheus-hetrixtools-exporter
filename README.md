@@ -40,6 +40,14 @@ this data on a very frequent interval, you'll need to purchase a plan that inclu
 
 [`goreleaser`](https://goreleaser.com) is used to automate the entire build and release process.
 
+Everything you'll need to run a build can be installed with the following:
+
+```
+go install github.com/goreleaser/goreleaser@latest
+go install github.com/anchore/syft@latest
+go install github.com/sigstore/cosign/cmd/cosign@latest
+```
+
 To run a development build, run `goreleaser --snapshot --rm-dist`.
 
 To release a new version, create and push the tag in the format `v0.0.0`. Binaries and Docker images will be
