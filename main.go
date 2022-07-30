@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/halkyon/prometheus-hetrixtools-exporter/internal/collector"
 	"github.com/prometheus/client_golang/prometheus"
@@ -42,6 +43,11 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/metrics", promhttp.HandlerFor(r, promhttp.HandlerOpts{}))
 
-	srv := http.Server{Addr: *addr, Handler: mux}
+	srv := http.Server{
+		Addr:              *addr,
+		Handler:           mux,
+		ReadTimeout:       5 * time.Second,
+		ReadHeaderTimeout: 5 * time.Second,
+	}
 	log.Fatal(srv.ListenAndServe())
 }

@@ -6,6 +6,7 @@ linters:
   disable:
     - depguard # : Go linter that checks if package imports are in a list of acceptable packages [fast: false, auto-fix: false]
     - exhaustivestruct # : Checks if all struct's fields are initialized [fast: false, auto-fix: false]
+    - exhaustruct
     - forbidigo # : Forbids identifiers [fast: true, auto-fix: false]
     - funlen # : Tool for detection of long functions [fast: true, auto-fix: false]
     - gochecknoglobals # : check that no global variables exist [fast: true, auto-fix: false]
@@ -16,6 +17,7 @@ linters:
     - goprintffuncname # : Checks that printf-like functions are named with `f` at the end [fast: true, auto-fix: false]
     - lll # : Reports long lines [fast: true, auto-fix: false]
     - nlreturn # : nlreturn checks for a new line before return and branch statements to increase code clarity [fast: true, auto-fix: false]
+    - nonamedreturns # : Report named error if it is assigned inside defer. [fast: true, auto-fix: false]
     - tagliatelle # : Checks the struct tags. [fast: true, auto-fix: false]
     - testpackage # : linter that makes you use a separate _test package [fast: true, auto-fix: false]
     - varnamelen #: checks that the length of a variable's name matches its scope [fast: false, auto-fix: false]
