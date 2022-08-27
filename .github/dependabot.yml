@@ -8,6 +8,9 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    commit-message:
+      prefix: "github-action"
+      include: "scope"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:

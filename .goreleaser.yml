@@ -152,6 +152,7 @@ snapshot:
 changelog:
   filters:
     exclude:
+      - "^github-action"
       - "^docs:"
       - "^test:"
       - Merge pull request
