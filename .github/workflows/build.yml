@@ -14,13 +14,13 @@ jobs:
   goreleaser:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.2
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f # v3.3.0
+      - uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f
         with:
           go-version: 1.18.5
-      - uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77 # v3.0.8
+      - uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77
         with:
           path: |
             ~/.cache/go-build
@@ -28,22 +28,22 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      - uses: docker/setup-qemu-action@8b122486cedac8393e77aa9734c3528886e4a1a8 # v2.0.0
-      - uses: sigstore/cosign-installer@b3413d484cc23cf8778c3d2aa361568d4eb54679 # v2.5.1
-      - uses: anchore/sbom-action/download-syft@b5042e9d19d8b32849779bfe17673ff84aec702d # v0.12.0
-      - uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # v2.0.0
+      - uses: docker/setup-qemu-action@8b122486cedac8393e77aa9734c3528886e4a1a8
+      - uses: sigstore/cosign-installer@b3413d484cc23cf8778c3d2aa361568d4eb54679
+      - uses: anchore/sbom-action/download-syft@b5042e9d19d8b32849779bfe17673ff84aec702d
+      - uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
         if: startsWith(github.ref, 'refs/tags/v')
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # v2.0.0
+      - uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
         if: startsWith(github.ref, 'refs/tags/v')
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - run: git fetch --force --tags
-      - uses: goreleaser/goreleaser-action@ff11ca24a9b39f2d36796d1fbd7a4e39c182630a # v3.1.0
+      - uses: goreleaser/goreleaser-action@ff11ca24a9b39f2d36796d1fbd7a4e39c182630a
         with:
           version: v1.10.3
           args: release --rm-dist
